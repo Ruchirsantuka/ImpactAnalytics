@@ -30,7 +30,7 @@ namespace ImpactAnalytics.Simulation
             var totalInitialInventory = group.Products.Sum(p => p.Inventory);
             Stopwatch st = new Stopwatch();
             st.Start();
-            for (int i = 0; i < Math.Min(10000, Math.Pow(weekCount, 3)); i++)
+            for (int i = 0; i < 10000; i++)
             {
                 var discounts = GetRandomDiscountSequence(group);
                 var simulator = new Simulator(group, discounts);
@@ -44,7 +44,7 @@ namespace ImpactAnalytics.Simulation
                     Console.WriteLine($"Found better Solution. Itertaion: {i} \t\t Profit: {bestObj}");
                 }
             }
-            Console.WriteLine($"Took {st.ElapsedMilliseconds/100} sec");
+            Console.WriteLine($"Solved in {st.ElapsedMilliseconds/100} sec");
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Best Solution found");
             for(int week = 0; week < weekCount; week++)
