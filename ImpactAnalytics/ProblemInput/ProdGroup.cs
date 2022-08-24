@@ -14,7 +14,7 @@ namespace ImpactAnalytics.ProblemInput
         public List<Product> Products;
 
         public HashSet<double> AllowedDiscounts;
-        public HashSet<double>[] AllowedDiscountsByWeek;
+        public List<double>[] AllowedDiscountsByWeek;
 
         public ProdGroup(string name)
         {
@@ -25,11 +25,10 @@ namespace ImpactAnalytics.ProblemInput
 
         public void PopulateAllowedDiscountsByWeek(int weekCount)
         {
-            AllowedDiscountsByWeek = new HashSet<double>[weekCount];
+            AllowedDiscountsByWeek = new List<double>[weekCount];
             for(int week = 0; week < weekCount; week++)
             {
                 var allowedDiscounts = new HashSet<double>();
-                AllowedDiscountsByWeek[week] = allowedDiscounts;
                 foreach(var discount in AllowedDiscounts)
                 {
                     if(Products.All(p => p.DemandsByWeekPrice[week].ContainsKey(discount)))
@@ -37,6 +36,7 @@ namespace ImpactAnalytics.ProblemInput
                         allowedDiscounts.Add(discount);
                     }
                 }
+                AllowedDiscountsByWeek[week] = allowedDiscounts.ToList();
             }
         }
     }

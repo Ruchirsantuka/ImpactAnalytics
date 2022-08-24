@@ -16,12 +16,14 @@ namespace ImpactAnalytics.ProblemInput
 
         public List<Product> Products { get; private set; }
         public List<ProdGroup> ProdGroups { get; private set; }
-        public void ReadInput()
+
+        private int maxProductsToConsider;
+        public void ReadInput(int maxProductsToConsider)
         {
+            this.maxProductsToConsider = maxProductsToConsider;
             ReadRawInput();
             PopulateWeeks();
             PopulateProductsAndGroups();
-            WeekCount = 13;
         }
 
         private void PopulateWeeks()
@@ -56,7 +58,7 @@ namespace ImpactAnalytics.ProblemInput
                     var first = groupByProduct.First();
                     var product = new Product(groupByProduct.Key, first.Inventory, first.CostPrice, prodGroup, WeekCount);
                     Products.Add(product);
-                    if (prodGroup.Products.Count < 100)
+                    if (prodGroup.Products.Count < this.maxProductsToConsider)
                         prodGroup.Products.Add(product);
 
                     foreach(var rawInput in groupByProduct)
