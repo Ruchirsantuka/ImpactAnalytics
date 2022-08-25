@@ -367,7 +367,7 @@ namespace ImpactAnalytics.Algo
                     }
                 }
             }
-            File.WriteAllText("QuantitySold.csv", sb.ToString());
+            File.WriteAllText("Output.csv", sb.ToString());
         }
     }
 

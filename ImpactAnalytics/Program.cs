@@ -11,7 +11,7 @@ input.ReadInput(maxProductsToBeConsidered);
 
 Console.WriteLine("Choose Algo");
 Console.WriteLine("1. MILP");
-Console.WriteLine("2. Simulation");
+Console.WriteLine("2. Neighborhood Search");
 var readLine = Console.ReadLine();
 while(readLine != "1" && readLine != "2")
 {
@@ -30,6 +30,6 @@ if (readLine == "1")
 
 else if (readLine == "2")
 {
-    var simuAlgo = new SimuAlgo(input);
+    var simuAlgo = new NeighborhooodSearch(input);
     simuAlgo.Run();
 }

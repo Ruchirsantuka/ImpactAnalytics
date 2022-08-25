@@ -57,5 +57,29 @@ namespace ImpactAnalytics.Simulation
             }
             return Tuple.Create(inventoryLeft, profit);
         }
+
+        public string GetOutputAsString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Product Id,Week,Quantity Sold,Selling Price,Revenue,Cost,Demand");
+            foreach(var prod in ProdGroup.Products)
+            {
+                var inventoryLeft = prod.Inventory;
+                var profit = 0.0;
+                var week = 0;
+                foreach (var discount in discounts)
+                {
+                    var demand = prod.DemandsByWeekPrice[week][discount].Demand;
+                    var sellingPrice = prod.DemandsByWeekPrice[week][discount].SellingPrice;
+
+                    var quantitySold = Math.Min(inventoryLeft, demand);
+                    inventoryLeft -= quantitySold;
+                    profit += quantitySold * (sellingPrice - prod.Cost);
+                    week++;
+                    sb.AppendLine($"{prod.Id},{week},{quantitySold},{sellingPrice},{quantitySold * sellingPrice},{prod.Cost*quantitySold},{demand}");
+                }
+            }
+            return sb.ToString();
+        }
     }
 }
